@@ -1,0 +1,56 @@
+{
+  "name": "open-observe-axi",
+  "version": "0.1.0",
+  "description": "Agent-ergonomic OpenObserve CLI for logs, traces, streams, and organizations",
+  "type": "module",
+  "bin": {
+    "open-observe-axi": "./dist/bin/open-observe-axi.js"
+  },
+  "files": [
+    "dist",
+    "skills/open-observe-axi",
+    ".env.example",
+    "LICENSE",
+    "README.md",
+    "AGENTS.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "build:skill": "tsx scripts/build-skill.ts",
+    "check:skill": "tsx scripts/build-skill.ts --check",
+    "dev": "tsx bin/open-observe-axi.ts",
+    "test": "npm run build && vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "openobserve",
+    "observability",
+    "logs",
+    "traces",
+    "cli",
+    "agent",
+    "axi",
+    "toon"
+  ],
+  "author": "Taylor Schmidt",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/schmidthole/open-observe-axi.git"
+  },
+  "dependencies": {
+    "@toon-format/toon": "^4.1.1",
+    "axi-sdk-js": "^0.1.11"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}

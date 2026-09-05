@@ -9,8 +9,11 @@ build/
 # Secrets and local config - never commit
 .env
 .env.*
+!.env.example
 *.local
 config.local.*
+.open-observe-axi.json
+open-observe-axi.config.json
 
 # Logs
 *.log
