@@ -38,6 +38,11 @@ export async function main(): Promise<void> {
       return jsonMode && typeof output !== "string" ? JSON.stringify(output, null, 2) : output;
     },
     commands: {
+      update: async () => {
+        throw new AxiError("registry updates are disabled: this project is not published to npm", "UPDATE_ERROR", [
+          "update your source checkout: https://github.com/schmidthole/open-observe-axi#install",
+        ]);
+      },
       logs: wrap(logsCommand),
       traces: wrap(tracesCommand),
       streams: wrap(streamsCommand),

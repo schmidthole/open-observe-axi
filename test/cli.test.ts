@@ -29,9 +29,29 @@ describe("CLI contract", () => {
 
   it("shows concise self-describing help at each command layer", () => {
     expect(run(["--help"]).stdout).toContain("commands[5]");
+    expect(run(["--help"]).stdout).not.toContain("latest published");
     expect(run(["logs", "--help"]).stdout).toContain("--sql");
     expect(run(["traces", "get", "--help"]).stdout).toContain("trace-id");
     expect(run(["setup", "--help"]).stdout).toContain("hooks");
+  });
+
+  it("blocks registry updates without registry or service requests", () => {
+    for (const args of [[], ["--check"], ["--help"], ["--json"], ["--check", "--json"], ["--help", "--json"]]) {
+      const result = spawnSync(process.execPath, ["--input-type=module", "-e", `
+        import http from "node:http";
+        import https from "node:https";
+        const unexpectedRequest = () => process.exit(91);
+        globalThis.fetch = unexpectedRequest;
+        http.request = https.request = unexpectedRequest;
+        process.argv = [process.execPath, ${JSON.stringify(bin)}, "update", ...${JSON.stringify(args)}];
+        await import("./${bin}");
+      `], { encoding: "utf8" });
+      expect(result.status).toBe(1);
+      expect(result.stderr).toBe("");
+      expect(result.stdout).toContain("registry updates are disabled");
+      expect(result.stdout).toContain("https://github.com/schmidthole/open-observe-axi#install");
+      if (args.includes("--json")) expect(JSON.parse(result.stdout).code).toBe("UPDATE_ERROR");
+    }
   });
 
   it("validates usage before authentication and emits JSON errors on request", () => {
