@@ -18,7 +18,7 @@ ${SKILL_GUIDE}
 ${TOP_LEVEL_HELP.trimEnd()}
 \`\`\`
 
-When the binary is not installed globally, replace \`open-observe-axi\` with \`npx -y open-observe-axi\`.
+If the binary is missing, follow the [installation instructions](https://github.com/schmidthole/open-observe-axi#install) to build and link it from this repository. This project is not published to npm.
 `;
 
 if (process.argv.includes("--check")) {

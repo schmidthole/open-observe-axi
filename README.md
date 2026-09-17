@@ -6,21 +6,29 @@ It follows the [axi](https://github.com/kunchenguid/axi) design principles: TOON
 
 ## Install
 
-Node.js 20 or newer is required.
+Node.js 20 or newer and Git are required. This project is not published to npm. Install from this repository so you get the intended CLI:
 
 ```sh
-npm install -g open-observe-axi
-open-observe-axi --version
-```
-
-Until the package is published, install from a checkout:
-
-```sh
-npm install
+git clone https://github.com/schmidthole/open-observe-axi.git
+cd open-observe-axi
+npm ci
 npm run build
 npm link
 open-observe-axi --version
 ```
+
+Keep the checkout: `npm link` connects the global command to its built files. Ensure your npm global bin directory is on `PATH`.
+
+To update, run these commands from that checkout:
+
+```sh
+git pull --ff-only
+npm ci
+npm run build
+open-observe-axi --version
+```
+
+The CLI's registry-based `update` command is disabled because this project is not published to npm.
 
 ## Connection and authentication
 
